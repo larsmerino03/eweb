@@ -1,0 +1,23 @@
+/* Button Styling */
+#meinButton {
+  background-color: #2563eb; /* Blau */
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Hover Effekt */
+#meinButton:hover {
+  background-color: #1d4ed8;
+}
+
+/* Klick Effekt */
+#meinButton:active {
+  transform: scale(0.98);
+}
