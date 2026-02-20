@@ -12,7 +12,7 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-/* Hover Effekt */
+/* Hover Effekt 1 */
 #meinButton:hover {
   background-color: #1d4ed8;
 }
