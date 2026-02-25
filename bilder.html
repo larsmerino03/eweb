@@ -14,7 +14,32 @@
       <nav aria-label="Hauptnavigation">
         <a href="news.html">News</a>
         <a href="anlaesse.html">Anlässe</a>
-        <a href="riegen.html">Riegen</a>
+        <!-- RIEGEN Dropdown (statt <a href="/riegen/">Riegen</a>) -->
+        <div class="nav-item nav-item--dropdown">
+          <a class="nav-link" href="/riegen/" aria-haspopup="true"> Riegen </a>
+
+          <!-- Dropdown-Inhalt (per CSS: anzeigen bei Hover/Fokus) -->
+          <ul class="dropdown-menu" aria-label="Riegen Untermenü">
+            <li>
+              <a class="dropdown-link" href="/riegen/turnen-fuer-alle/"
+                >Turnen für Alle</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-link" href="/riegen/senioren/">Senioren</a>
+            </li>
+            <li><a class="dropdown-link" href="/riegen/maenner/">Männer</a></li>
+            <li><a class="dropdown-link" href="/riegen/aktive/">Aktive</a></li>
+            <li>
+              <a class="dropdown-link" href="/riegen/jugendriege/"
+                >Jugendriege</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-link" href="/riegen/korbball/">Korbball</a>
+            </li>
+          </ul>
+        </div>
         <a href="wir.html">Wir</a>
         <a href="kontakt.html">Kontakt</a>
         <a href="bilder.html">Bilder</a>
