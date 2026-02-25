@@ -1,66 +1,99 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="de-CH">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Über mich | Portfolio</title>
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
 
   <body>
+    <!-- HEADER -->
     <header>
-      <div class="brand">
-        <a href="index.html" aria-label="Startseite">Vorname Nachname</a>
-      </div>
-
-      <nav aria-label="Hauptnavigation">
-        <a href="index.html">Über mich</a>
-        <a href="meine_workouts.html">Meine Workouts</a>
-        <a href="highlights.html">Highlights</a>
-
-        <!-- Ausrüstung: nicht klickbar, Dropdown zu Unterseiten -->
-        <div class="nav-item nav-item--dropdown">
-          <span class="nav-link" aria-haspopup="true">Ausrüstung</span>
-          <ul class="dropdown-menu" aria-label="Ausrüstung Untermenü">
-            <li>
-              <a class="dropdown-link" href="ausruestung/gravel.html">Gravel</a>
-            </li>
-            <li>
-              <a class="dropdown-link" href="ausruestung/padel.html">Padel</a>
-            </li>
-          </ul>
+      <div class="container">
+        <div class="brand">
+          <a href="index.html" aria-label="Startseite">Vorname Nachname</a>
         </div>
 
-        <a href="musik.html">Musik</a>
-      </nav>
+        <nav aria-label="Hauptnavigation">
+          <a href="index.html">Über mich</a>
+          <a href="meine_workouts.html">Meine Workouts</a>
+          <a href="highlights.html">Highlights</a>
+
+          <!-- Ausrüstung: nicht klickbar, Dropdown -->
+          <div class="nav-item nav-item--dropdown">
+            <span class="nav-link" aria-haspopup="true">Ausrüstung</span>
+            <ul class="dropdown-menu" aria-label="Ausrüstung Untermenü">
+              <li>
+                <a class="dropdown-link" href="ausruestung/gravel.html"
+                  >Gravel</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-link" href="ausruestung/padel.html">Padel</a>
+              </li>
+            </ul>
+          </div>
+
+          <a href="musik.html">Musik</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <section>
-        <h1>Vorname Nachname</h1>
-        <p>Beruf · Studium</p>
+    <!-- MAIN -->
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <h1>Vorname Nachname</h1>
+            <p class="lead">Beruf · Studium</p>
 
-        <div>
-          <img src="assets/images/profile.jpg" alt="Profilbild" width="300" />
+            <p class="intro">
+              Kurzer Text über dich. Was dich ausmacht, was du gerne machst und
+              worauf du aktuell fokussiert bist.
+            </p>
+          </div>
+
+          <div class="photo">
+            <img src="assets/images/profile.jpg" alt="Profilbild" width="320" />
+          </div>
         </div>
-
-        <p>
-          Kurzer Text über dich. Was dich ausmacht, was du gerne machst und
-          worauf du aktuell fokussiert bist.
-        </p>
       </section>
 
-      <section>
+      <section class="section">
         <h2>Ein paar Infos</h2>
-        <ul>
+        <ul class="info-list">
           <li>📍 Wohnort</li>
           <li>🏃 Lieblingssport</li>
           <li>🎯 Ziel</li>
         </ul>
+
+        <div class="cards" aria-label="Infokacheln">
+          <article class="card">
+            <h3>Was ich gern mache</h3>
+            <p>Sport, Reisen, Musik, Technik – kurz als Platzhalter.</p>
+          </article>
+
+          <article class="card">
+            <h3>Aktueller Fokus</h3>
+            <p>Challenge / Routine / Training – was dich gerade beschäftigt.</p>
+          </article>
+
+          <article class="card">
+            <h3>Wichtig für mich</h3>
+            <p>Werte/Prinzipien: Disziplin, Humor, Teamgeist, etc.</p>
+          </article>
+        </div>
       </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-      <p>© 2026</p>
+      <div class="container">
+        <p>© 2026</p>
+      </div>
     </footer>
   </body>
 </html>
