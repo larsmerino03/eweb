@@ -3,57 +3,300 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Turnverein Studen</title>
+    <title>Portfolio | Vorname Nachname</title>
+    <meta
+      name="description"
+      content="Private Portfolio-Seite: Über mich, Workouts (Strava), Highlights und mehr."
+    />
   </head>
 
   <body>
-    
-<header>
-  <div class="brand">
-    <a href="index.html" aria-label="Startseite">Turnverein Studen</a>
-  </div>
+    <!-- HEADER (oben fix einsetzbar) -->
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="index.html" aria-label="Startseite">
+          <span class="brand-name">Vorname Nachname</span>
+        </a>
 
-  <nav aria-label="Hauptnavigation">
-    <a href="news.html">News</a>
-    <a href="anlaesse.html">Anlässe</a>
+        <nav class="main-nav" aria-label="Hauptnavigation">
+          <a href="#about">Über mich</a>
+          <a href="#workouts">Meine Workouts</a>
+          <a href="#highlights">Highlights</a>
+          <a href="#gear">Ausrüstung</a>
+          <a href="#contact">Kontakt</a>
+        </nav>
+      </div>
+    </header>
 
-    <!-- RIEGEN Dropdown -->
-    <div class="nav-item nav-item--dropdown">
-      <a class="nav-link" href="riegen/riegen.html" aria-haspopup="true">Riegen</a>
+    <main class="container">
+      <!-- HERO: Name, Beruf, Studium + Foto -->
+      <section class="hero" id="about">
+        <div class="hero-text">
+          <h1 class="hero-title">Vorname Nachname</h1>
 
-      <ul class="dropdown-menu" aria-label="Riegen Untermenü">
-        <li><a class="dropdown-link" href="riegen/turnern_fuer_alle.html">Turnen für Alle</a></li>
-        <li><a class="dropdown-link" href="riegen/senioren.html">Senioren</a></li>
-        <li><a class="dropdown-link" href="riegen/maenner.html">Männer</a></li>
-        <li><a class="dropdown-link" href="riegen/aktive.html">Aktive</a></li>
-        <li><a class="dropdown-link" href="riegen/jugendriege.html">Jugendriege</a></li>
-        <li><a class="dropdown-link" href="riegen/korbball.html">Korbball</a></li>
-      </ul>
-    </div>
+          <p class="hero-subtitle">
+            <span class="hero-role">Beruf: …</span><br />
+            <span class="hero-study">Studium: …</span>
+          </p>
 
-    <a href="wir.html">Wir</a>
-    <a href="kontakt.html">Kontakt</a>
-    <a href="bilder.html">Bilder</a>
+          <p class="hero-intro">
+            Kurzer Text über dich (2–3 Sätze): Was dich antreibt, was du gern
+            machst, worauf du aktuell fokussiert bist.
+          </p>
 
-    <details>
-      <summary>Mehr</summary>
-      <ul>
-        <!-- Diese Seiten hast du aktuell NICHT als Dateien im Repo.
-             Entweder anlegen oder Links anpassen. -->
-        <li><a href="archiv.html">Archiv</a></li>
-        <li><a href="links.html">Links</a></li>
-        <li><a href="downloads.html">Downloads</a></li>
-        <li><a href="vereinsblitz.html">Vereinsblitz</a></li>
-      </ul>
-    </details>
-  </nav>
-</header>
+          <ul class="quick-info" aria-label="Kurzinfos">
+            <li>📍 Wohnort: …</li>
+            <li>🏃 Lieblingssport: …</li>
+            <li>🎯 Aktuelles Ziel: …</li>
+          </ul>
+        </div>
 
-    <main>
-      <!-- Inhalte / Seiteninhalte -->
+        <div class="hero-photo" aria-label="Profilfoto">
+          <!-- Ersetze später src + alt -->
+          <img
+            src="assets/images/profile.jpg"
+            alt="Porträt von Vorname Nachname"
+            width="360"
+            height="360"
+          />
+        </div>
+      </section>
 
-    <footer>
-      <!-- Footer -->
+      <!-- INFOS (unten noch einige Infos) -->
+      <section class="section" aria-label="Weitere Infos">
+        <header class="section-header">
+          <h2>Ein paar Infos</h2>
+          <p>Kleine Übersicht, die du später schön gestalten kannst.</p>
+        </header>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Was ich gern mache</h3>
+            <p>Sport, Reisen, Musik, Kochen, Technik – kurz als Platzhalter.</p>
+          </article>
+
+          <article class="info-card">
+            <h3>Woran ich arbeite</h3>
+            <p>
+              Ein persönliches Ziel oder Projekt (z.B. Training, Routine,
+              Challenge).
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>Was mir wichtig ist</h3>
+            <p>Werte/Prinzipien: z.B. Disziplin, Humor, Familie, Teamgeist.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- REGISTER: Workouts (Strava) -->
+      <section class="section" id="workouts">
+        <header class="section-header">
+          <h2>Meine Workouts</h2>
+          <p>
+            Hier kommt die Verknüpfung zu Strava rein (API/Embed). Das HTML
+            enthält bereits Platzhalter, damit du später CSS/JS drüberlegen
+            kannst.
+          </p>
+        </header>
+
+        <div class="workouts-layout">
+          <aside class="workouts-sidebar" aria-label="Strava Verbindung">
+            <h3>Strava verbinden</h3>
+            <p>
+              Platzhalter für OAuth/Login-Button oder Hinweistext. Später z.B.:
+              „Mit Strava verbinden“, Token-Status, letzter Sync.
+            </p>
+
+            <button type="button" class="btn-strava">
+              Mit Strava verbinden
+            </button>
+
+            <div class="strava-status" aria-live="polite">
+              <p>Status: <strong>Nicht verbunden</strong></p>
+            </div>
+          </aside>
+
+          <div class="workouts-feed" aria-label="Workout Übersicht">
+            <h3>Letzte Aktivitäten</h3>
+
+            <!-- Platzhalter: später dynamisch via Strava API befüllen -->
+            <ul class="workout-list">
+              <li class="workout-item">
+                <strong>Aktivitätstitel</strong>
+                <div>Datum · Distanz · Zeit · Pace/Speed</div>
+              </li>
+              <li class="workout-item">
+                <strong>Aktivitätstitel</strong>
+                <div>Datum · Distanz · Zeit · Pace/Speed</div>
+              </li>
+              <li class="workout-item">
+                <strong>Aktivitätstitel</strong>
+                <div>Datum · Distanz · Zeit · Pace/Speed</div>
+              </li>
+            </ul>
+
+            <button type="button" class="btn-more">Mehr anzeigen</button>
+          </div>
+        </div>
+
+        <!-- Optionaler Bereich: Stats -->
+        <div class="workout-stats" aria-label="Workout Statistiken">
+          <h3>Statistiken</h3>
+          <ul class="stats-list">
+            <li><strong>Woche:</strong> … km</li>
+            <li><strong>Monat:</strong> … km</li>
+            <li><strong>Jahr:</strong> … km</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REGISTER: Highlights (Uploads) -->
+      <section class="section" id="highlights">
+        <header class="section-header">
+          <h2>Highlights</h2>
+          <p>
+            Sport-Highlights als Galerie. Später kannst du Upload/Verwaltung
+            serverseitig lösen oder via CMS. Hier ist das Gerüst.
+          </p>
+        </header>
+
+        <!-- Platzhalter: Upload UI (funktioniert erst mit Backend/JS wirklich) -->
+        <form
+          class="highlight-upload"
+          action="#"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <fieldset>
+            <legend>Highlight hinzufügen</legend>
+
+            <label>
+              Titel
+              <input
+                type="text"
+                name="title"
+                placeholder="z.B. Padel Turnier, Bergtour, Rennen"
+              />
+            </label>
+
+            <label>
+              Beschreibung
+              <textarea
+                name="description"
+                rows="3"
+                placeholder="Kurzer Text zum Highlight"
+              ></textarea>
+            </label>
+
+            <label>
+              Foto/Video
+              <input type="file" name="media" accept="image/*,video/*" />
+            </label>
+
+            <button type="submit">Hochladen</button>
+          </fieldset>
+        </form>
+
+        <!-- Galerie -->
+        <div class="highlights-gallery" aria-label="Highlights Galerie">
+          <article class="highlight-card">
+            <div class="highlight-media">Bild/Video Platzhalter</div>
+            <h3>Highlight Titel</h3>
+            <p>Kurzbeschreibung des Highlights.</p>
+          </article>
+
+          <article class="highlight-card">
+            <div class="highlight-media">Bild/Video Platzhalter</div>
+            <h3>Highlight Titel</h3>
+            <p>Kurzbeschreibung des Highlights.</p>
+          </article>
+
+          <article class="highlight-card">
+            <div class="highlight-media">Bild/Video Platzhalter</div>
+            <h3>Highlight Titel</h3>
+            <p>Kurzbeschreibung des Highlights.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- WEITERES REGISTER (Idee): Ausrüstung -->
+      <section class="section" id="gear">
+        <header class="section-header">
+          <h2>Ausrüstung</h2>
+          <p>
+            Idee: Zeige dein Sport-Setup (Bike, Padel-Schläger, Schuhe,
+            Gadgets). Praktisch und persönlich – und einfach zu pflegen.
+          </p>
+        </header>
+
+        <div class="gear-grid" aria-label="Ausrüstungsliste">
+          <article class="gear-card">
+            <h3>🚴 Rennvelo</h3>
+            <p>Modell/Setup/Notizen (Platzhalter).</p>
+          </article>
+
+          <article class="gear-card">
+            <h3>🏓 Padel</h3>
+            <p>Schläger, Overgrips, Bälle (Platzhalter).</p>
+          </article>
+
+          <article class="gear-card">
+            <h3>⌚ Tracking</h3>
+            <p>Uhr/Sensoren/Apps (Platzhalter).</p>
+          </article>
+
+          <article class="gear-card">
+            <h3>👟 Schuhe</h3>
+            <p>Für Training/Outdoor/Indoor (Platzhalter).</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- KONTAKT -->
+      <section class="section" id="contact">
+        <header class="section-header">
+          <h2>Kontakt</h2>
+          <p>Kurzer Kontaktbereich (Formular oder Links).</p>
+        </header>
+
+        <div class="contact-grid">
+          <form class="contact-form" action="#" method="post">
+            <label>
+              Name
+              <input type="text" name="name" />
+            </label>
+
+            <label>
+              E-Mail
+              <input type="email" name="email" />
+            </label>
+
+            <label>
+              Nachricht
+              <textarea name="message" rows="5"></textarea>
+            </label>
+
+            <button type="submit">Senden</button>
+          </form>
+
+          <aside class="contact-links" aria-label="Links">
+            <h3>Links</h3>
+            <ul>
+              <li><a href="#" rel="me">Instagram</a></li>
+              <li><a href="#" rel="me">Strava</a></li>
+              <li><a href="#" rel="me">LinkedIn (optional)</a></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span class="year">2026</span> Vorname Nachname</p>
+      </div>
     </footer>
   </body>
 </html>
