@@ -8,10 +8,41 @@
   <body>
     <header>
       <!-- Navigation wie in index.html -->
+      <div class="brand">
+        <a href="/" aria-label="Startseite">Turnverein Studen</a>
+      </div>
+      <nav aria-label="Hauptnavigation">
+        <a href="news.html">News</a>
+        <a href="anlaesse.html">Anlässe</a>
+        <a href="riegen.html">Riegen</a>
+        <a href="wir.html">Wir</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="bilder.html">Bilder</a>
+        <details>
+          <summary>Mehr</summary>
+          <ul>
+            <li><a href="/archiv/">Archiv</a></li>
+            <li><a href="/links/">Links</a></li>
+            <li><a href="/downloads/">Downloads</a></li>
+            <li><a href="/vereinsblitz/">Vereinsblitz</a></li>
+          </ul>
+        </details>
+      </nav>
     </header>
     <main>
       <h1>Anlässe</h1>
       <!-- Anlässe-Inhalte -->
+      <section class="pdf-viewer">
+        <h2>Dokument</h2>
+
+        <iframe
+          src="/pdf/generalversammlung-2026.pdf"
+          width="100%"
+          height="800"
+          style="border: none"
+        >
+        </iframe>
+      </section>
     </main>
     <footer>
       <!-- Footer -->
