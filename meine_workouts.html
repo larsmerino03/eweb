@@ -3,58 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Meine Workouts</title>
+    <title>Workouts</title>
+    <link rel="stylesheet" href="assets/css/app.css" />
   </head>
 
   <body>
-    <header>
-      <div class="brand">
-        <a href="index.html" aria-label="Startseite">Vorname Nachname</a>
-      </div>
+    <main class="app">
+      <h1>Workouts</h1>
+      <p class="sub">Hier kommt später die Strava-Verknüpfung rein</p>
 
-      <nav aria-label="Hauptnavigation">
-        <a href="index.html">Über mich</a>
-        <a href="meine_workouts.html">Meine Workouts</a>
-        <a href="highlights.html">Highlights</a>
-
-        <!-- Ausrüstung: nicht klickbar, Dropdown zu Unterseiten -->
-        <div class="nav-item nav-item--dropdown">
-          <span class="nav-link" aria-haspopup="true">Ausrüstung</span>
-          <ul class="dropdown-menu" aria-label="Ausrüstung Untermenü">
-            <li>
-              <a class="dropdown-link" href="ausruestung/gravel.html">Gravel</a>
-            </li>
-            <li>
-              <a class="dropdown-link" href="ausruestung/padel.html">Padel</a>
-            </li>
-          </ul>
-        </div>
-
-        <a href="musik.html">Musik</a>
-      </nav>
-    </header>
-
-    <main>
-      <h1>Meine Workouts</h1>
-      <p>Hier kommt die Strava Integration.</p>
-
-      <section>
-        <h2>Strava Verbindung</h2>
-        <button>Mit Strava verbinden</button>
-      </section>
-
-      <section>
-        <h2>Letzte Aktivitäten</h2>
-        <ul>
-          <li>Workout Platzhalter</li>
-          <li>Workout Platzhalter</li>
-          <li>Workout Platzhalter</li>
+      <section class="panel">
+        <h2>Platzhalter Inhalte</h2>
+        <p class="muted">
+          Schreibe hier kurz rein, was du trackst (Rad, Gym, Padel, Laufen
+          etc.). Später kannst du hier die Strava API anbinden oder Aktivitäten
+          ausgeben.
+        </p>
+        <ul class="list">
+          <li>Letztes Workout: (Platzhalter)</li>
+          <li>Wochenziel: (Platzhalter)</li>
+          <li>Favourite Activity: (Platzhalter)</li>
         </ul>
       </section>
     </main>
-
-    <footer>
-      <p>© 2026</p>
-    </footer>
   </body>
 </html>
