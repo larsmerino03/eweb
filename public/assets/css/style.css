@@ -1,5 +1,6 @@
 /* assets/css/style.css */
 
+/* ===== Reset / Base ===== */
 * {
   box-sizing: border-box;
 }
@@ -78,26 +79,27 @@ body {
   word-break: break-word;
 }
 
-/* „Random“ Positionen – ändere sie jederzeit nach Geschmack */
+/* Saubere Icon Anordnung */
 .icon-ueber {
-  top: 70px;
-  left: 90px;
+  top: 60px;
+  left: 60px;
 }
 .icon-workouts {
-  top: 220px;
-  left: 58%;
+  top: 200px;
+  left: 60px;
 }
 .icon-highlights {
-  top: 120px;
-  right: 130px;
+  top: 340px;
+  left: 60px;
+}
+
+.icon-playlist {
+  bottom: 200px;
+  right: 60px;
 }
 .icon-ausruestung {
-  bottom: 190px;
-  left: 240px;
-}
-.icon-playlist {
-  bottom: 250px;
-  right: 160px;
+  bottom: 60px;
+  right: 60px;
 }
 
 /* ===== Windows Layer ===== */
@@ -107,7 +109,7 @@ body {
   pointer-events: none;
 }
 
-/* Fenster Grundform */
+/* ===== Window Grundform ===== */
 .window {
   pointer-events: auto;
   position: absolute;
@@ -124,48 +126,57 @@ body {
   border-bottom: 2px solid #5e5e5e;
 
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+
+  /* Resize */
+  resize: both;
   overflow: hidden;
+  min-width: 320px;
+  min-height: 220px;
+
+  z-index: 1;
 }
 
 .window.is-open {
   display: block;
 }
 
-/* Fenster Startpositionen (nicht alle gleich) */
+/* Startpositionen */
 #win-ueber {
   top: 90px;
-  left: 120px;
+  left: 180px;
 }
 #win-workouts {
-  top: 70px;
-  left: 80px;
+  top: 120px;
+  left: 220px;
 }
 #win-highlights {
-  top: 140px;
-  right: 110px;
+  top: 150px;
+  left: 260px;
 }
 #win-ausruestung {
-  bottom: 110px;
-  left: 160px;
+  top: 180px;
+  left: 300px;
 }
 #win-playlist {
-  top: 120px;
-  left: 15%;
+  top: 210px;
+  left: 340px;
 }
 
-/* Titelbar */
+/* ===== Titlebar ===== */
 .win-topbar {
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 8px;
 
   background: linear-gradient(90deg, #0b2f88, #2a7bd8);
   color: #fff;
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+
+  cursor: move;
+  user-select: none;
 }
 
 .win-title-left {
@@ -189,7 +200,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Close Button (3D) */
+/* Close Button */
 .win-close {
   width: 24px;
   height: 24px;
@@ -250,7 +261,7 @@ body {
   border-bottom: 2px solid #ffffff;
 }
 
-/* Variante mit Tabs (Ausrüstung) */
+/* Tabs (Ausrüstung) */
 .win-body--tabs {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -262,7 +273,6 @@ body {
   gap: 10px;
 }
 
-/* Tab Buttons (3D) */
 .win-tab {
   height: 34px;
   padding: 0 14px;
@@ -292,7 +302,7 @@ body {
   background: #fff;
 }
 
-/* ===== Taskbar (Oldschool) ===== */
+/* ===== Taskbar ===== */
 .taskbar {
   position: absolute;
   left: 0;
@@ -324,7 +334,6 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 
   padding: 0 16px;
   background: #d6d6d6;
@@ -342,23 +351,55 @@ body {
   text-transform: uppercase;
 }
 
-.taskbar-btn:hover {
-  filter: brightness(0.9);
-}
-
-.taskbar-btn:active {
-  border-top: 2px solid #6e6e6e;
-  border-left: 2px solid #6e6e6e;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
-  transform: translateY(1px);
-}
-
 .taskbar-clock {
   min-width: 110px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", monospace;
   letter-spacing: 0.5px;
+}
+
+/* Fenster Buttons in Taskbar */
+.taskbar-windows {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 60vw;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.taskbar-window-btn {
+  height: 42px;
+  padding: 0 14px;
+  white-space: nowrap;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #d6d6d6;
+
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #6e6e6e;
+  border-bottom: 2px solid #6e6e6e;
+
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.taskbar-window-btn:hover {
+  filter: brightness(0.93);
+}
+
+.taskbar-window-btn.active {
+  border-top: 2px solid #6e6e6e;
+  border-left: 2px solid #6e6e6e;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
 }
 
 /* Mobile */
@@ -367,6 +408,7 @@ body {
     width: 90px;
     height: 90px;
   }
+
   .desktop-icon {
     width: 150px;
   }
@@ -378,5 +420,109 @@ body {
     right: auto !important;
     top: 12px !important;
     bottom: auto !important;
+
+    resize: none;
   }
+
+  .taskbar-windows {
+    max-width: 45vw;
+  }
+}
+
+.taskbar-window-btn {
+  height: 42px;
+  width: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #d6d6d6;
+
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #6e6e6e;
+  border-bottom: 2px solid #6e6e6e;
+
+  cursor: pointer;
+}
+
+.taskbar-window-icon {
+  width: 26px;
+  height: 26px;
+  image-rendering: pixelated;
+}
+
+.taskbar-window-btn.active {
+  border-top: 2px solid #6e6e6e;
+  border-left: 2px solid #6e6e6e;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+.taskbar-net {
+  height: 42px;
+  min-width: 130px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 14px;
+
+  background: #d6d6d6;
+
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #6e6e6e;
+  border-bottom: 2px solid #6e6e6e;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Retro Farben */
+.taskbar-net.is-online {
+  color: #0b6b0b;
+}
+
+.taskbar-net.is-offline {
+  color: #9b1111;
+}
+.taskbar-net {
+  height: 42px;
+  min-width: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 16px;
+
+  background: #d6d6d6;
+
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #6e6e6e;
+  border-bottom: 2px solid #6e6e6e;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+}
+
+/* ONLINE */
+.taskbar-net.is-online {
+  color: #0b6b0b;
+  text-shadow: 0 0 3px rgba(0, 150, 0, 0.6);
+}
+
+/* OFFLINE */
+.taskbar-net.is-offline {
+  color: #9b1111;
+  text-shadow: 0 0 3px rgba(200, 0, 0, 0.6);
 }
