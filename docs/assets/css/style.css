@@ -484,21 +484,69 @@ body {
 /* Mobile */
 @media (max-width: 760px) {
   .icon-img {
-    width: 90px;
-    height: 90px;
-  }
-  .desktop-icon {
-    width: 150px;
+    width: 72px;
+    height: 72px;
   }
 
+  .desktop-icon {
+    width: 130px;
+  }
+
+  .icon-label {
+    font-size: 13px;
+  }
+
+  /* Icons in 2-Spalten-Grid anordnen */
+  .icon-ueber {
+    top: 24px;
+    left: 5%;
+    right: auto;
+    bottom: auto;
+  }
+  .icon-workouts {
+    top: 24px;
+    left: 55%;
+    right: auto;
+    bottom: auto;
+  }
+  .icon-highlights {
+    top: 180px;
+    left: 5%;
+    right: auto;
+    bottom: auto;
+  }
+  .icon-ausruestung {
+    top: 180px;
+    left: 55%;
+    right: auto;
+    bottom: auto;
+  }
+  .icon-playlist {
+    top: 336px;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    bottom: auto;
+  }
+
+  /* Fenster: fast Vollbild */
   .window {
-    width: calc(100vw - 24px);
-    height: calc(100vh - 90px);
-    left: 12px !important;
+    width: calc(100vw - 16px) !important;
+    height: calc(100vh - 76px) !important;
+    left: 8px !important;
     right: auto !important;
-    top: 12px !important;
+    top: 8px !important;
     bottom: auto !important;
     resize: none;
+  }
+
+  /* Taskbar: NET-Status ausblenden auf kleinen Screens */
+  .taskbar-net {
+    display: none;
+  }
+
+  .taskbar-clock {
+    min-width: 80px;
   }
 }
 
