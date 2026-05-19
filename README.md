@@ -1,224 +1,205 @@
-# Portfolio Desktop – mit Strava Integration
+# Portfolio – Lars Merino
 
-Dieses Projekt ist eine Desktop-artige Portfolio Webseite mit Strava Integration.  
-Die Workouts werden direkt über die Strava API geladen und im Fenster **WORKOUTS** angezeigt.
+Eine persönliche Portfolio-Website im Retro-Desktop-Stil (Windows 95/98 Ästhetik), entwickelt im Rahmen des Moduls **EWEB** an der **Berner Fachhochschule (BFH)**.
 
----
-
-# Voraussetzungen
-
-Folgende Software muss installiert sein:
-
-- Node.js
-
-Prüfen mit:
-
-```bash
-node -v
-```
+🌐 **Live:** [larsmerino03.github.io/eweb](https://larsmerino03.github.io/eweb/)
 
 ---
 
-# Ordnerstruktur
+## Über die Seite
 
-Der Projektordner sollte so aufgebaut sein:
+Die Website simuliert einen klassischen Desktop mit Fenstern, die sich öffnen, verschieben und schliessen lassen. Jedes Icon auf dem Desktop öffnet ein eigenes Fenster mit Inhalt.
+
+| Fenster | Inhalt |
+|---|---|
+| **Über mich** | Kurze Vorstellung, Steckbrief, Profilbild |
+| **Workouts** | Meine Strava-Aktivitäten (live aus einer JSON-Datei) |
+| **Highlights** | Zwei ausgewählte Touren mit interaktiver Karte, Stats und Fotos |
+| **Ausrüstung** | Mein Gravelbike (ARC8 Eero) und Padel-Schläger (NOX AT10 Genius) |
+| **Playlist** | Meine aktuelle Musik-Playlist |
+
+---
+
+## Features
+
+- Desktop-Interface mit draggbaren Fenstern, Minimieren, Maximieren und Schliessen
+- Taskbar mit Uhr und offenen Fenstern
+- **Strava API Integration** – Aktivitäten werden als statische JSON-Datei eingebunden (kein Server nötig zum Anzeigen)
+- Interaktive Routenkarten mit **Leaflet.js** + OpenStreetMap
+- Strava-Fotos direkt aus der CDN eingebunden
+- Filter-Funktion für Workouts (Sportart, Zeitraum, Suche)
+- Vollständig statisch – läuft auf **GitHub Pages**
+
+---
+
+## Tech Stack
+
+| Technologie | Verwendung |
+|---|---|
+| HTML / CSS / JavaScript | Gesamte Website (vanilla, kein Framework) |
+| Node.js + Express | Lokales Script zum Datenabruf von Strava |
+| Strava API v3 | Aktivitäten, Routen, Fotos |
+| Leaflet.js | Interaktive Karten mit Google Encoded Polyline |
+| OpenStreetMap | Kartenmaterial (kostenlos, keine API-Key nötig) |
+| GitHub Pages | Hosting (statisch aus `/docs`) |
+| dotenv | Lokale Umgebungsvariablen (.env) |
+
+---
+
+## Projektstruktur
 
 ```
 eweb/
-├── server.js
+├── docs/                        # Öffentliche Website (GitHub Pages)
+│   ├── index.html               # Desktop-Startseite
+│   ├── meine_workouts.html      # Strava Workouts
+│   ├── highlights.html          # Highlight-Touren mit Karte
+│   ├── ueber_mich.html          # Über mich
+│   ├── musik.html               # Playlist
+│   ├── ausruestung/
+│   │   ├── gravel.html          # ARC8 Eero Specs
+│   │   └── padel.html           # NOX AT10 Genius Specs
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── style.css        # Desktop-Styles
+│   │   │   └── app.css          # Fenster-Inhalte Styles
+│   │   ├── JS/
+│   │   │   └── script.js        # Desktop-Logik (Fenster, Drag, Taskbar)
+│   │   └── images/
+│   └── data/
+│       └── activities.json      # Strava-Aktivitäten (statisch gespeichert)
+├── scripts/
+│   └── fetch-activities.js      # Script: Strava-Daten abrufen und speichern
+├── server.js                    # Lokaler OAuth-Server (nur für Setup)
 ├── package.json
-├── .env
-└── public/
-    ├── index.html
-    ├── meine_workouts.html
-    ├── ueber_mich.html
-    ├── highlights.html
-    ├── musik.html
-    ├── ausruestung/
-    │   ├── gravel.html
-    │   └── padel.html
-    └── assets/
-        ├── css/
-        │   └── style.css
-        ├── js/
-        │   └── script.js
-        └── images/
+├── .env                         # Geheim – wird nicht auf GitHub hochgeladen
+└── .gitignore
 ```
 
 ---
 
-# 1. .env Datei erstellen
+## Live anschauen
 
-Im gleichen Ordner wie `server.js` eine Datei erstellen:
+Die Website ist direkt erreichbar unter:
 
 ```
-.env
+https://larsmerino03.github.io/eweb/
 ```
 
-Inhalt:
+Kein Server, kein Login, kein Setup nötig.
+
+---
+
+## Lokal ausführen (Entwicklung)
+
+### Voraussetzungen
+
+- [Node.js](https://nodejs.org/) installiert
+
+### Dependencies installieren
+
+```bash
+npm install
+```
+
+### Website lokal öffnen
+
+Da die Website statisch ist, kann sie direkt mit einem lokalen Webserver oder dem VS Code Live Server geöffnet werden. Die Datei `docs/index.html` ist der Einstiegspunkt.
+
+---
+
+## Strava API – Wie es funktioniert
+
+Die Strava-Integration läuft in **zwei Phasen**:
+
+### Phase 1 – Einmalige Authentifizierung (nur ich)
+
+Da Strava OAuth erfordert, muss ich einmalig einen `refresh_token` holen:
+
+```bash
+node server.js
+```
+
+Dann im Browser:
+```
+http://127.0.0.1:3000/strava/login
+```
+
+Nach dem Login wird der `refresh_token` angezeigt → in `.env` eintragen:
 
 ```env
-STRAVA_CLIENT_ID=208023
-STRAVA_CLIENT_SECRET=DEIN_GEHEIMER_CLIENTSCHLUESSEL
+STRAVA_CLIENT_ID=...
+STRAVA_CLIENT_SECRET=...
+STRAVA_REFRESH_TOKEN=...
 ```
 
-Wichtig:
-
-- Die `.env` Datei darf **nicht im public Ordner** liegen.
-- Die `.env` Datei sollte **nicht auf GitHub hochgeladen werden**.
-
----
-
-# 2. Dependencies installieren
-
-Terminal öffnen und in den Projektordner wechseln:
+### Phase 2 – Daten abrufen und speichern
 
 ```bash
-cd eweb
+npm run fetch
 ```
 
-Dann installieren:
+Dieses Script:
+1. Holt mit dem `refresh_token` einen neuen Access Token (kein Browser nötig)
+2. Lädt alle Aktivitäten von der Strava API herunter
+3. Speichert sie als `docs/data/activities.json`
+
+Die JSON-Datei wird dann auf GitHub committed → der Besucher sieht die Daten, ohne sich bei Strava anmelden zu müssen.
+
+### Aktivitäten aktualisieren
+
+Nach neuen Aktivitäten auf Strava:
 
 ```bash
-npm install express dotenv
+npm run fetch
+git add docs/data/activities.json
+git commit -m "Aktivitäten aktualisiert"
+git push
 ```
 
-Falls noch kein `package.json` existiert:
+---
+
+## Deployment (GitHub Pages)
+
+Die Website wird automatisch aus dem `/docs`-Ordner auf dem `main`-Branch deployed.
+
+**Einstellungen:** Repository → Settings → Pages → Branch: `main` / Folder: `/docs`
+
+Jeder Push auf `main` löst automatisch einen neuen Deploy aus.
+
+---
+
+## Häufige Probleme
+
+### Karte zeigt nichts an
+
+Die interaktiven Karten (Leaflet.js) initialisieren sich erst wenn das Fenster geöffnet wird. Beim ersten Öffnen des Highlights-Fensters können die Karten 1–2 Sekunden brauchen zum Laden.
+
+### Aktivitäten werden nicht angezeigt
+
+Die Workouts-Seite liest `docs/data/activities.json`. Falls die Datei nicht existiert oder leer ist:
 
 ```bash
-npm init -y
+npm run fetch
 ```
+
+### Bilder fehlen auf GitHub Pages
+
+GitHub Pages läuft auf Linux → Dateinamen sind **case-sensitive**. Alle Dateinamen müssen klein geschrieben sein (z.B. `profile.jpg`, nicht `profile.JPG`).
 
 ---
 
-# 3. Server starten
+## Autor
 
-Im Projektordner im Terminal ausführen:
+**Lars Merino**
+Student Wirtschaftsinformatik – Berner Fachhochschule (BFH)
+ICT-Projektmitarbeiter – Stadt Bern
 
-```bash
-node server.js
-```
-
-Wenn alles funktioniert erscheint im Terminal:
-
-```
-Server läuft: http://127.0.0.1:3000
-Strava verbinden: http://127.0.0.1:3000/strava/login
-```
-
-Das Terminal muss geöffnet bleiben.
+[LinkedIn](https://ch.linkedin.com/in/lars-merino-b63625200)
 
 ---
 
-# 4. Strava verbinden
+## Modul
 
-Im Browser öffnen:
-
-```
-http://127.0.0.1:3000/strava/login
-```
-
-Dann:
-
-1. Strava Login
-2. Zugriff erlauben
-3. Danach erscheint:
-
-```
-Strava verbunden
-Scope: read,activity:read
-```
-
----
-
-# 5. Website öffnen
-
-Die Seite darf **nicht über Live Server oder per Doppelklick** geöffnet werden.
-
-Richtig ist:
-
-```
-http://127.0.0.1:3000/index.html
-```
-
-Dort erscheint der Desktop mit den Fenstern.
-
----
-
-# 6. Workouts testen
-
-Direkt im Browser öffnen:
-
-```
-http://127.0.0.1:3000/api/activities
-```
-
-Es sollte eine JSON Liste mit Strava Aktivitäten erscheinen.
-
----
-
-# API Beispiele
-
-Nur Rides anzeigen:
-
-```
-http://127.0.0.1:3000/api/activities?type=Ride
-```
-
-Suche nach Aktivität:
-
-```
-http://127.0.0.1:3000/api/activities?q=padel
-```
-
-Letzte 90 Tage:
-
-```
-http://127.0.0.1:3000/api/activities?days=90
-```
-
----
-
-# Häufige Fehler
-
-## Seite lädt nicht
-
-Der Server läuft nicht.
-
-Lösung:
-
-```bash
-node server.js
-```
-
----
-
-## Workouts zeigen nur "LADE..."
-
-Die Seite wurde nicht über den Node Server geöffnet.
-
-Richtig:
-
-```
-http://127.0.0.1:3000/index.html
-```
-
----
-
-## Strava Token fehlt
-
-Nach einem Server Neustart muss Strava erneut verbunden werden:
-
-```
-http://127.0.0.1:3000/strava/login
-```
-
----
-
-# Server stoppen
-
-Im Terminal:
-
-```bash
-CTRL + C
-```
+**EWEB** – Web Engineering
+Berner Fachhochschule, Frühlingssemester 2026
