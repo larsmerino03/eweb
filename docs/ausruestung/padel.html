@@ -5,24 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Padel</title>
     <link rel="stylesheet" href="../assets/css/app.css" />
+    <style>
+      .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 14px;
+      }
+      .spec-table tr {
+        border-bottom: 1px solid #aaa;
+      }
+      .spec-table td {
+        padding: 7px 10px;
+      }
+      .spec-table td:first-child {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: #555;
+        white-space: nowrap;
+        width: 130px;
+      }
+      .spec-table td:last-child {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      .badge-dark {
+        display: inline-block;
+        background: #111;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        padding: 3px 10px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .racket-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+        max-height: 340px;
+      }
+      .panel + .panel {
+        margin-top: 14px;
+      }
+      .win-title-bar {
+        background: linear-gradient(to right, #1c3a6e, #4a6fb5);
+        color: #fff;
+        font-weight: 900;
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 4px 10px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .quote {
+        border-left: 3px solid #111;
+        padding: 6px 12px;
+        margin: 14px 0 0;
+        font-style: italic;
+        font-size: 13px;
+        color: #333;
+        background: #d8d8d8;
+      }
+    </style>
   </head>
-
   <body>
     <main class="app">
       <h1>Padel</h1>
-      <p class="sub">Platzhalter: Schläger, Schuhe, Bälle, Skills</p>
+      <p class="sub">Mein Setup — NOX AT10 Genius 18K</p>
 
-      <section class="panel">
-        <h2>Mein Padel Setup</h2>
-        <p class="muted">
-          Hier kommt später dein Schläger (Modell), Overgrips, Schuhe, Hallen
-          etc. rein.
-        </p>
-        <ul class="list">
-          <li>Schläger: (Platzhalter)</li>
-          <li>Schuhe: (Platzhalter)</li>
-          <li>Favourite Shot: (Platzhalter)</li>
-        </ul>
+      <section class="panel grid-2">
+        <div class="img-frame">
+          <img
+            class="racket-img"
+            src="../assets/images/padel-schlaeger.jpg"
+            alt="NOX AT10 Genius 18K Agustin Tapia"
+          />
+        </div>
+
+        <div>
+          <span class="badge-dark">Luxury Series</span>
+          <div class="win-title-bar">NOX AT10 Genius 18K — Specs</div>
+
+          <table class="spec-table">
+            <tr>
+              <td>Modell</td>
+              <td>NOX AT10 Genius 18K</td>
+            </tr>
+            <tr>
+              <td>Pro</td>
+              <td>Agustín Tapia</td>
+            </tr>
+            <tr>
+              <td>Serie</td>
+              <td>Luxury Series</td>
+            </tr>
+            <tr>
+              <td>Material</td>
+              <td>18K Carbon Fibre Alloy</td>
+            </tr>
+            <tr>
+              <td>Form</td>
+              <td>Rund (Round)</td>
+            </tr>
+            <tr>
+              <td>Kern</td>
+              <td>MLD Foam (Multi Layer Density)</td>
+            </tr>
+            <tr>
+              <td>Technologie</td>
+              <td>DCS (Dynamic Control System)</td>
+            </tr>
+            <tr>
+              <td>Design</td>
+              <td>Designed in Spain</td>
+            </tr>
+          </table>
+
+          <p class="quote">
+            Der Schläger von World No. 1 Agustín Tapia — maximale Kontrolle
+            durch 18K Carbon und MLD-Kern. Präzision auf jedem Court.
+          </p>
+        </div>
       </section>
     </main>
   </body>

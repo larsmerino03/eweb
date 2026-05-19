@@ -5,24 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gravel</title>
     <link rel="stylesheet" href="../assets/css/app.css" />
+    <style>
+      .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 14px;
+      }
+      .spec-table tr {
+        border-bottom: 1px solid #aaa;
+      }
+      .spec-table td {
+        padding: 7px 10px;
+      }
+      .spec-table td:first-child {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: #555;
+        white-space: nowrap;
+        width: 130px;
+      }
+      .spec-table td:last-child {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      .badge-green {
+        display: inline-block;
+        background: #2d5a27;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        padding: 3px 10px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .bike-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+      .panel + .panel {
+        margin-top: 14px;
+      }
+      .win-title-bar {
+        background: linear-gradient(to right, #1c3a6e, #4a6fb5);
+        color: #fff;
+        font-weight: 900;
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 4px 10px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
-
   <body>
     <main class="app">
       <h1>Gravel</h1>
-      <p class="sub">Platzhalter: Setup, Komponenten, Tipps</p>
+      <p class="sub">Mein Setup — ARC8 Eero</p>
 
-      <section class="panel">
-        <h2>Mein Setup</h2>
-        <p class="muted">
-          Hier beschreibst du später dein Gravel-Bike, Wheels, Reifen, Druck,
-          Tools etc.
-        </p>
-        <ul class="list">
-          <li>Bike: (Platzhalter)</li>
-          <li>Reifen: (Platzhalter)</li>
-          <li>Lieblingstour: (Platzhalter)</li>
-        </ul>
+      <section class="panel grid-2">
+        <div class="img-frame">
+          <img
+            class="bike-img"
+            src="../assets/images/gravel-bike.jpg"
+            alt="ARC8 Eero Gravelbike"
+          />
+        </div>
+
+        <div>
+          <span class="badge-green">Carbon Gravel</span>
+          <div class="win-title-bar">ARC8 Eero — Specs</div>
+
+          <table class="spec-table">
+            <tr>
+              <td>Bike</td>
+              <td>ARC8 Eero</td>
+            </tr>
+            <tr>
+              <td>Reifen</td>
+              <td>Pirelli Cinturato H 40-622</td>
+            </tr>
+            <tr>
+              <td>Felgen</td>
+              <td>DT Swiss GRC 1100 50mm</td>
+            </tr>
+            <tr>
+              <td>Schaltung</td>
+              <td>Shimano GRX 820 12 Speed</td>
+            </tr>
+            <tr>
+              <td>Kassette</td>
+              <td>Shimano CS-R8100 11-34T</td>
+            </tr>
+            <tr>
+              <td>Kurbel</td>
+              <td>Shimano GRX 810 48/31T</td>
+            </tr>
+            <tr>
+              <td>Bremsscheiben</td>
+              <td>Shimano RT-MT800 160mm</td>
+            </tr>
+          </table>
+        </div>
       </section>
     </main>
   </body>
