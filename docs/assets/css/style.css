@@ -369,6 +369,7 @@ body {
 }
 
 /* Link-Button wie Windows */
+.taskbar-btn,
 .taskbar-clock,
 .taskbar-net {
   height: 42px;
