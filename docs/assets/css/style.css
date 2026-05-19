@@ -369,7 +369,6 @@ body {
 }
 
 /* Link-Button wie Windows */
-.taskbar-btn,
 .taskbar-clock,
 .taskbar-net {
   height: 42px;
@@ -392,6 +391,11 @@ body {
   font-weight: 900;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+.taskbar-btn {
+  text-transform: none;
+  letter-spacing: 0.5px;
 }
 
 .taskbar-btn:hover {
