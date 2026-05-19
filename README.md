@@ -46,6 +46,25 @@ Die Website simuliert einen klassischen Desktop mit Fenstern, die sich öffnen, 
 
 ---
 
+## Website anschauen – für Besucher
+
+**Kein Setup, keine Installation, keine Accounts nötig.**
+
+Die Website ist vollständig statisch und läuft direkt im Browser:
+
+👉 **[larsmerino03.github.io/eweb](https://larsmerino03.github.io/eweb/)**
+
+Alle Features sind sofort verfügbar:
+
+- Desktop mit Fenstern öffnen → **Doppelklick auf ein Icon**
+- Workouts mit Filter → Fenster **WORKOUTS** öffnen
+- Interaktive Streckenkarte → Fenster **HIGHLIGHTS** öffnen
+- Ausrüstung und Specs → Fenster **AUSRÜSTUNG** öffnen
+
+> Die Strava-Aktivitäten sind als statische Datei im Repository gespeichert und werden ohne Login geladen. Die interaktiven Karten laufen über OpenStreetMap und benötigen eine Internetverbindung.
+
+---
+
 ## Projektstruktur
 
 ```
