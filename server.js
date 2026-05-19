@@ -1,6 +1,21 @@
 import express from "express";
 import dotenv from "dotenv";
 
+async function readJsonSafe(response) {
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+
+  if (!contentType.includes("application/json")) {
+    return { __notJson: true, contentType, text };
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    return { __parseError: true, contentType, text };
+  }
+}
+
 // .env zuverlässig laden (auch in Cloud/OneDrive-Ordnern)
 dotenv.config({ path: new URL("./.env", import.meta.url) });
 
@@ -12,7 +27,7 @@ const BASE_URL = `http://127.0.0.1:${PORT}`;
 const REDIRECT_URI = `${BASE_URL}/strava/callback`;
 
 // Website aus /public ausliefern
-app.use(express.static("public"));
+app.use(express.static("docs"));
 
 // Env
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID;
@@ -87,7 +102,18 @@ app.get("/strava/callback", async (req, res) => {
     }),
   });
 
-  const data = await r.json();
+  const data = await readJsonSafe(r);
+
+  if (data.__notJson || data.__parseError) {
+    return res.status(500).send(`
+    <h3>❌ Strava Token Response war kein gültiges JSON</h3>
+    <div><b>content-type:</b> ${escapeHtml(data.contentType)}</div>
+    <pre style="white-space:pre-wrap;max-width:900px;">
+${escapeHtml(data.text).slice(0, 2000)}
+    </pre>
+  `);
+  }
+
   if (!r.ok) return res.status(500).send(JSON.stringify(data, null, 2));
 
   tokenStore = {
@@ -96,9 +122,16 @@ app.get("/strava/callback", async (req, res) => {
     expires_at: data.expires_at,
   };
 
+  console.log("\n✅ REFRESH TOKEN (in .env einfügen als STRAVA_REFRESH_TOKEN):");
+  console.log(data.refresh_token);
+  console.log("");
+
   res.send(`
     <h3>✅ Strava verbunden</h3>
     <p>Scope: <b>${grantedScope}</b></p>
+    <p>Füge diesen Wert als <code>STRAVA_REFRESH_TOKEN</code> in deine <code>.env</code> ein:</p>
+    <pre style="background:#f0f0f0;padding:12px;border:2px solid #111;font-size:14px;word-break:break-all">${data.refresh_token}</pre>
+    <p>Danach: <code>npm run fetch</code> ausführen um die Aktivitäten als JSON zu speichern.</p>
     <p><a href="/api/activities">Activities testen</a></p>
     <p><a href="/index.html">Zur Website</a></p>
   `);

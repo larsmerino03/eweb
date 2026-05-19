@@ -1,6 +1,5 @@
 /* assets/css/style.css */
 
-/* ===== Reset / Base ===== */
 * {
   box-sizing: border-box;
 }
@@ -79,37 +78,41 @@ body {
   word-break: break-word;
 }
 
-/* Saubere Icon Anordnung */
+/* Saubere Anordnung (oben links / unten rechts) */
 .icon-ueber {
   top: 60px;
-  left: 60px;
+  left: 70px;
 }
 .icon-workouts {
-  top: 200px;
-  left: 60px;
+  top: 60px;
+  left: 260px;
 }
 .icon-highlights {
-  top: 340px;
-  left: 60px;
+  top: 60px;
+  left: 450px;
 }
 
 .icon-playlist {
-  bottom: 200px;
-  right: 60px;
+  bottom: 160px;
+  right: 260px;
 }
 .icon-ausruestung {
-  bottom: 60px;
-  right: 60px;
+  bottom: 160px;
+  right: 70px;
 }
 
-/* ===== Windows Layer ===== */
+/* ===== Windows Layer =====
+   Wichtig: Taskbar muss IMMER vorne sein.
+   Darum: Windows Layer bekommt niedrigeren z-index als Taskbar.
+*/
 .windows {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1000;
 }
 
-/* ===== Window Grundform ===== */
+/* Fenster Grundform */
 .window {
   pointer-events: auto;
   position: absolute;
@@ -126,48 +129,52 @@ body {
   border-bottom: 2px solid #5e5e5e;
 
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
-
-  /* Resize */
-  resize: both;
   overflow: hidden;
+
+  /* Resize möglich im normalen Zustand */
+  resize: both;
+
+  /* Grenzen */
   min-width: 320px;
   min-height: 220px;
 
-  z-index: 1;
+  /* Unter Taskbar bleiben (Taskbar ist 9999) */
+  z-index: 1001;
 }
 
 .window.is-open {
   display: block;
 }
 
-/* Startpositionen */
+/* Fenster Startpositionen */
 #win-ueber {
   top: 90px;
-  left: 180px;
+  left: 120px;
 }
 #win-workouts {
-  top: 120px;
-  left: 220px;
+  top: 110px;
+  left: 160px;
 }
 #win-highlights {
-  top: 150px;
-  left: 260px;
+  top: 130px;
+  left: 200px;
 }
 #win-ausruestung {
-  top: 180px;
-  left: 300px;
+  top: 150px;
+  left: 240px;
 }
 #win-playlist {
-  top: 210px;
-  left: 340px;
+  top: 170px;
+  left: 280px;
 }
 
-/* ===== Titlebar ===== */
+/* Titelbar */
 .win-topbar {
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0 8px;
 
   background: linear-gradient(90deg, #0b2f88, #2a7bd8);
@@ -175,8 +182,12 @@ body {
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.35);
 
-  cursor: move;
-  user-select: none;
+  /* Drag-Feeling */
+  cursor: grab;
+}
+
+.win-topbar:active {
+  cursor: grabbing;
 }
 
 .win-title-left {
@@ -200,8 +211,16 @@ body {
   text-transform: uppercase;
 }
 
-/* Close Button */
-.win-close {
+/* Controls rechts (Max + Close) */
+.win-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* 3D Buttons */
+.win-close,
+.win-max {
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -212,9 +231,13 @@ body {
   border-left: 2px solid #ffffff;
   border-right: 2px solid #5e5e5e;
   border-bottom: 2px solid #5e5e5e;
+
+  font-weight: 900;
+  line-height: 1;
 }
 
-.win-close:active {
+.win-close:active,
+.win-max:active {
   border-top: 2px solid #5e5e5e;
   border-left: 2px solid #5e5e5e;
   border-right: 2px solid #ffffff;
@@ -261,7 +284,7 @@ body {
   border-bottom: 2px solid #ffffff;
 }
 
-/* Tabs (Ausrüstung) */
+/* Variante mit Tabs (Ausrüstung) */
 .win-body--tabs {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -273,6 +296,7 @@ body {
   gap: 10px;
 }
 
+/* Tab Buttons (3D) */
 .win-tab {
   height: 34px;
   padding: 0 14px;
@@ -302,7 +326,20 @@ body {
   background: #fff;
 }
 
-/* ===== Taskbar ===== */
+/* ===== Maximized (Fullscreen im Desktop, Taskbar bleibt sichtbar) ===== */
+.window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  width: 100vw !important;
+  height: calc(100vh - 56px) !important; /* Taskbar Höhe */
+
+  resize: none; /* im Vollbild kein Resize */
+}
+
+/* ===== Taskbar (Oldschool) ===== */
 .taskbar {
   position: absolute;
   left: 0;
@@ -319,6 +356,9 @@ body {
   background: #cfcfcf;
   border-top: 2px solid #ffffff;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* WICHTIG: immer im Vordergrund */
+  z-index: 9999;
 }
 
 .taskbar-left,
@@ -328,12 +368,15 @@ body {
   gap: 10px;
 }
 
+/* Link-Button wie Windows */
 .taskbar-btn,
-.taskbar-clock {
+.taskbar-clock,
+.taskbar-net {
   height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
   padding: 0 16px;
   background: #d6d6d6;
@@ -351,6 +394,18 @@ body {
   text-transform: uppercase;
 }
 
+.taskbar-btn:hover {
+  filter: brightness(0.92);
+}
+
+.taskbar-btn:active {
+  border-top: 2px solid #6e6e6e;
+  border-left: 2px solid #6e6e6e;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: translateY(1px);
+}
+
 .taskbar-clock {
   min-width: 110px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -358,24 +413,37 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Fenster Buttons in Taskbar */
+/* NET Status (Retro) */
+.taskbar-net {
+  min-width: 120px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+.taskbar-net.is-online {
+  filter: none;
+}
+
+.taskbar-net.is-offline {
+  filter: grayscale(1);
+  opacity: 0.85;
+}
+
+/* Taskbar Window Buttons (Icons) */
 .taskbar-windows {
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: 60vw;
-  overflow: auto;
-  padding-right: 4px;
 }
 
 .taskbar-window-btn {
   height: 42px;
-  padding: 0 14px;
-  white-space: nowrap;
-
+  width: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   background: #d6d6d6;
 
@@ -384,22 +452,33 @@ body {
   border-right: 2px solid #6e6e6e;
   border-bottom: 2px solid #6e6e6e;
 
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.taskbar-window-btn:hover {
-  filter: brightness(0.93);
+.taskbar-window-btn:active {
+  border-top: 2px solid #6e6e6e;
+  border-left: 2px solid #6e6e6e;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: translateY(1px);
 }
 
+/* Active Window Highlight (wie gedrückt) */
 .taskbar-window-btn.active {
   border-top: 2px solid #6e6e6e;
   border-left: 2px solid #6e6e6e;
   border-right: 2px solid #ffffff;
   border-bottom: 2px solid #ffffff;
+  filter: brightness(0.96);
+}
+
+.taskbar-window-icon {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 /* Mobile */
@@ -408,7 +487,6 @@ body {
     width: 90px;
     height: 90px;
   }
-
   .desktop-icon {
     width: 150px;
   }
@@ -420,109 +498,209 @@ body {
     right: auto !important;
     top: 12px !important;
     bottom: auto !important;
-
     resize: none;
-  }
-
-  .taskbar-windows {
-    max-width: 45vw;
   }
 }
 
-.taskbar-window-btn {
-  height: 42px;
-  width: 46px;
+.win-controls {
+  display: flex;
+  gap: 4px;
+}
 
+.win-minimize,
+.win-maximize,
+.win-close {
+  width: 28px;
+  height: 24px;
+
+  background: #d9d9d9;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #5e5e5e;
+  border-bottom: 2px solid #5e5e5e;
+
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.win-minimize:active,
+.win-maximize:active,
+.win-close:active {
+  border-top: 2px solid #5e5e5e;
+  border-left: 2px solid #5e5e5e;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+/* =========================
+   PLAYLIST PAGE
+   ========================= */
+
+.playlist-page {
+  margin: 0;
+  padding: 14px;
+  background: #ffffff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.playlist-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.playlist-title {
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.playlist-btn {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  min-width: 88px;
+  height: 38px;
+  padding: 0 14px;
 
   background: #d6d6d6;
+  color: #111;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 
   border-top: 2px solid #ffffff;
   border-left: 2px solid #ffffff;
   border-right: 2px solid #6e6e6e;
   border-bottom: 2px solid #6e6e6e;
-
-  cursor: pointer;
 }
 
-.taskbar-window-icon {
-  width: 26px;
-  height: 26px;
-  image-rendering: pixelated;
+.playlist-btn:hover {
+  filter: brightness(0.94);
 }
 
-.taskbar-window-btn.active {
+.playlist-btn:active {
   border-top: 2px solid #6e6e6e;
   border-left: 2px solid #6e6e6e;
   border-right: 2px solid #ffffff;
   border-bottom: 2px solid #ffffff;
+  transform: translateY(1px);
 }
-.taskbar-net {
-  height: 42px;
-  min-width: 130px;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0 14px;
-
-  background: #d6d6d6;
+.playlist-frame-wrap {
+  height: calc(100vh - 120px);
+  min-height: 420px;
+  padding: 20px;
+  background: #f5f5f5;
 
   border-top: 2px solid #ffffff;
   border-left: 2px solid #ffffff;
   border-right: 2px solid #6e6e6e;
   border-bottom: 2px solid #6e6e6e;
-
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* Retro Farben */
-.taskbar-net.is-online {
-  color: #0b6b0b;
-}
-
-.taskbar-net.is-offline {
-  color: #9b1111;
-}
-.taskbar-net {
-  height: 42px;
-  min-width: 150px;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+}
 
-  padding: 0 16px;
+.playlist-frame {
+  width: 100%;
+  max-width: 500px;
+  height: 520px;
+  border: 0;
+  background: #fff;
+}
+
+.playlist-hint {
+  display: none;
+}
+
+/* =========================
+   PLAYLIST PAGE
+========================= */
+
+.playlist-page {
+  margin: 0;
+  padding: 24px;
+  background: #efefef;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.playlist-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.playlist-cover img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid #777;
+  border-bottom: 2px solid #777;
+}
+
+.playlist-info {
+  max-width: 500px;
+}
+
+.playlist-title {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.playlist-description {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+.playlist-open-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 16px;
 
   background: #d6d6d6;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
 
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #6e6e6e;
-  border-bottom: 2px solid #6e6e6e;
-
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-weight: 900;
-  font-size: 16px;
-  letter-spacing: 3px;
-
-  text-transform: uppercase;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid #777;
+  border-bottom: 2px solid #777;
 }
 
-/* ONLINE */
-.taskbar-net.is-online {
-  color: #0b6b0b;
-  text-shadow: 0 0 3px rgba(0, 150, 0, 0.6);
+.playlist-open-btn:active {
+  border-top: 2px solid #777;
+  border-left: 2px solid #777;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
 }
 
-/* OFFLINE */
-.taskbar-net.is-offline {
-  color: #9b1111;
-  text-shadow: 0 0 3px rgba(200, 0, 0, 0.6);
+.playlist-songs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.playlist-song {
+  padding: 8px 12px;
+  background: white;
+
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid #777;
+  border-bottom: 2px solid #777;
+
+  font-size: 14px;
 }

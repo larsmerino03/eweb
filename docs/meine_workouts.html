@@ -162,40 +162,35 @@
         )} km • ${Math.round(totalElev)} hm • ${mins(totalTime)} min`;
       }
 
+      let allActivities = null;
+
       async function loadActivities() {
-        const type = document.getElementById("type").value;
-        const days = document.getElementById("days").value;
-        const q = document.getElementById("q").value;
-
-        const url = new URL("/api/activities", window.location.origin);
-        if (type) url.searchParams.set("type", type);
-        if (days) url.searchParams.set("days", days);
-        if (q) url.searchParams.set("q", q);
-
         statusEl.textContent = "lädt…";
         list.innerHTML = "<li>LADE…</li>";
 
         try {
-          const res = await fetch(url, { cache: "no-store" });
-
-          // Debug: falls Server HTML/Fehler liefert
-          const contentType = res.headers.get("content-type") || "";
-          const text = await res.text();
-
-          if (!res.ok) {
-            statusEl.textContent = "";
-            list.innerHTML = `<li>FEHLER (${res.status}): ${text}</li>`;
-            return;
+          if (!allActivities) {
+            const res = await fetch("data/activities.json");
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const json = await res.json();
+            allActivities = json.activities || json;
           }
 
-          if (!contentType.includes("application/json")) {
-            statusEl.textContent = "";
-            list.innerHTML = `<li>FEHLER: Erwartete JSON Antwort, bekam: ${contentType}<br><br>${text}</li>`;
-            return;
-          }
+          const type = document.getElementById("type").value;
+          const days = Number(document.getElementById("days").value) || 30;
+          const q = document.getElementById("q").value.trim().toLowerCase();
 
-          const data = JSON.parse(text);
-          render(data);
+          const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+
+          const filtered = allActivities.filter((a) => {
+            const date = new Date(a.start_date_local || a.start_date).getTime();
+            const okDays = date >= cutoff;
+            const okType = !type || a.type === type || a.sport_type === type;
+            const okQ = !q || (a.name || "").toLowerCase().includes(q);
+            return okDays && okType && okQ;
+          });
+
+          render(filtered);
           statusEl.textContent = "";
         } catch (e) {
           statusEl.textContent = "";

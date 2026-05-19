@@ -1,16 +1,17 @@
 // assets/js/script.js
-// Open/Close windows + Tabs + Clock + Drag + Taskbar window buttons (minimize/switch)
+// Open/Close + Taskbar Buttons + Tabs + Clock + Drag + NET + Minimize + Maximize
 
 (() => {
   "use strict";
 
   let topZ = 10;
-  const taskbarContainer = document.getElementById("taskbar-windows");
 
-  function bringToFront(win) {
-    topZ += 1;
-    win.style.zIndex = String(topZ);
-    setActiveTaskbarButton(win.id);
+  const TASKBAR_HEIGHT = 56;
+  const taskbarContainer = document.getElementById("taskbar-windows");
+  const netEl = document.getElementById("net-status");
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
   }
 
   function setActiveTaskbarButton(windowId) {
@@ -19,26 +20,34 @@
     });
   }
 
+  function bringToFront(win) {
+    topZ += 1;
+    win.style.zIndex = String(topZ);
+    setActiveTaskbarButton(win.id);
+  }
+
   function createTaskbarButton(win) {
     if (!taskbarContainer) return;
 
     const id = win.id;
 
-    // schon vorhanden?
     if (taskbarContainer.querySelector(`[data-taskbar="${id}"]`)) return;
 
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.className = "taskbar-window-btn";
     btn.dataset.taskbar = id;
 
-    // passendes Desktop Icon suchen
     const desktopIcon = document.querySelector(`[data-open="${id}"] img`);
 
     if (desktopIcon) {
       const icon = document.createElement("img");
       icon.src = desktopIcon.src;
+      icon.alt = "";
       icon.className = "taskbar-window-icon";
       btn.appendChild(icon);
+    } else {
+      btn.textContent = id;
     }
 
     btn.addEventListener("click", () => {
@@ -67,11 +76,20 @@
     win.classList.add("is-open");
     win.setAttribute("aria-hidden", "false");
 
-    // Important: if window was positioned with right/bottom in CSS, convert to left/top once
     const rect = win.getBoundingClientRect();
+
+    const maxLeft = Math.max(0, window.innerWidth - rect.width);
+    const maxTop = Math.max(
+      0,
+      window.innerHeight - TASKBAR_HEIGHT - rect.height
+    );
+
+    const left = clamp(rect.left, 0, maxLeft);
+    const top = clamp(rect.top, 0, maxTop);
+
     win.style.position = "absolute";
-    win.style.left = `${rect.left}px`;
-    win.style.top = `${rect.top}px`;
+    win.style.left = `${left}px`;
+    win.style.top = `${top}px`;
     win.style.right = "auto";
     win.style.bottom = "auto";
   }
@@ -80,7 +98,6 @@
     win.classList.remove("is-open");
     win.setAttribute("aria-hidden", "true");
 
-    // Remove active highlight
     const btn = document.querySelector(
       `.taskbar-window-btn[data-taskbar="${win.id}"]`
     );
@@ -88,14 +105,36 @@
   }
 
   function closeWindow(win) {
-    // Close via X: remove window + remove taskbar button
     win.classList.remove("is-open");
+    win.classList.remove("maximized");
     win.setAttribute("aria-hidden", "true");
     removeTaskbarButton(win);
+
+    const btn = win.querySelector("[data-maximize]");
+    if (btn) {
+      btn.textContent = "▢";
+      btn.title = "Maximieren";
+      btn.setAttribute("aria-label", "Fenster maximieren");
+    }
+  }
+
+  function toggleMaximize(win) {
+    const btn = win.querySelector("[data-maximize]");
+    const isMax = win.classList.toggle("maximized");
+
+    if (btn) {
+      btn.textContent = isMax ? "❐" : "▢";
+      btn.title = isMax ? "Wiederherstellen" : "Maximieren";
+      btn.setAttribute(
+        "aria-label",
+        isMax ? "Fenster wiederherstellen" : "Fenster maximieren"
+      );
+    }
+
+    bringToFront(win);
   }
 
   function initOpenClose() {
-    // Open via icons
     document.querySelectorAll("[data-open]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-open");
@@ -108,19 +147,55 @@
       });
     });
 
-    // Close via X
-    document.querySelectorAll("[data-close]").forEach((btn) => {
-      btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-minimize]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const win = btn.closest(".window");
         if (!win) return;
+
+        minimizeWindow(win);
+      });
+    });
+
+    document.querySelectorAll("[data-close]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const win = btn.closest(".window");
+        if (!win) return;
+
         closeWindow(win);
       });
     });
 
-    // Click in window -> bring to front
+    document.querySelectorAll("[data-maximize]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const win = btn.closest(".window");
+        if (!win) return;
+
+        toggleMaximize(win);
+      });
+    });
+
+    document.querySelectorAll(".window .win-topbar").forEach((bar) => {
+      bar.addEventListener("dblclick", (e) => {
+        if (e.target.closest(".win-controls")) return;
+
+        const win = bar.closest(".window");
+        if (!win) return;
+
+        toggleMaximize(win);
+      });
+    });
+
     document.querySelectorAll(".window").forEach((win) => {
       win.addEventListener("mousedown", () => {
-        // only if it's visible/open
         if (!win.classList.contains("is-open")) return;
         bringToFront(win);
       });
@@ -146,6 +221,7 @@
       const mm = String(now.getMinutes()).padStart(2, "0");
       el.textContent = `${hh}:${mm}`;
     }
+
     updateClock();
     setInterval(updateClock, 1000);
   }
@@ -164,9 +240,10 @@
       const iframes = Array.from(win.querySelectorAll("iframe"));
 
       header.addEventListener("mousedown", (e) => {
-        if (e.button !== 0) return; // left mouse only
+        if (e.button !== 0) return;
         if (!win.classList.contains("is-open")) return;
-        if (e.target.closest("[data-close]")) return;
+        if (e.target.closest(".win-controls")) return;
+        if (win.classList.contains("maximized")) return;
 
         bringToFront(win);
 
@@ -178,14 +255,12 @@
         startLeft = rect.left;
         startTop = rect.top;
 
-        // ensure left/top positioning
         win.style.position = "absolute";
         win.style.left = `${startLeft}px`;
         win.style.top = `${startTop}px`;
         win.style.right = "auto";
         win.style.bottom = "auto";
 
-        // prevent iframe from stealing mousemove while dragging
         iframes.forEach((f) => (f.style.pointerEvents = "none"));
 
         e.preventDefault();
@@ -197,47 +272,53 @@
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
-        win.style.left = `${startLeft + dx}px`;
-        win.style.top = `${startTop + dy}px`;
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+
+        const rect = win.getBoundingClientRect();
+        const maxLeft = Math.max(0, window.innerWidth - rect.width);
+        const maxTop = Math.max(
+          0,
+          window.innerHeight - TASKBAR_HEIGHT - rect.height
+        );
+
+        newLeft = clamp(newLeft, 0, maxLeft);
+        newTop = clamp(newTop, 0, maxTop);
+
+        win.style.left = `${newLeft}px`;
+        win.style.top = `${newTop}px`;
       });
 
       document.addEventListener("mouseup", () => {
         if (!dragging) return;
         dragging = false;
-
-        // restore iframe interaction
         iframes.forEach((f) => (f.style.pointerEvents = ""));
       });
     });
   }
 
-  // Run
+  function updateNetworkBars() {
+    if (!netEl) return;
+
+    if (navigator.onLine) {
+      netEl.textContent = "NET ▮▮▮▮";
+      netEl.classList.add("is-online");
+      netEl.classList.remove("is-offline");
+      netEl.title = "Internet verbunden";
+    } else {
+      netEl.textContent = "NET ▯▯▯▯";
+      netEl.classList.add("is-offline");
+      netEl.classList.remove("is-online");
+      netEl.title = "Keine Internetverbindung";
+    }
+  }
+
+  window.addEventListener("online", updateNetworkBars);
+  window.addEventListener("offline", updateNetworkBars);
+
   initOpenClose();
   initTabs();
   initClock();
   initDrag();
+  updateNetworkBars();
 })();
-
-function updateNetworkBars() {
-  const el = document.getElementById("net-status");
-  if (!el) return;
-
-  if (navigator.onLine) {
-    el.textContent = "NET ▮▮▮▮";
-    el.classList.add("is-online");
-    el.classList.remove("is-offline");
-
-    el.title = "Internet verbunden";
-  } else {
-    el.textContent = "NET ▯▯▯▯";
-    el.classList.add("is-offline");
-    el.classList.remove("is-online");
-
-    el.title = "Keine Internetverbindung";
-  }
-}
-
-window.addEventListener("online", updateNetworkBars);
-window.addEventListener("offline", updateNetworkBars);
-
-updateNetworkBars();
