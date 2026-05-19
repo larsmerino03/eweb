@@ -35,12 +35,17 @@
         background: #bbb;
         padding: 6px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 6px;
+        align-items: flex-start;
       }
       .activity-photos img {
-        width: 100%;
+        flex: 1 1 0;
+        width: 0;
         height: auto;
+        max-height: 220px;
+        object-fit: contain;
+        object-position: top;
         display: block;
       }
       .badge-ride {
