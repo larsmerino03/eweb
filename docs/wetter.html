@@ -112,6 +112,18 @@
         grid-template-columns: repeat(7, 1fr);
         gap: 4px;
         padding: 0 14px 14px;
+        overflow-x: auto;
+      }
+
+      @media (max-width: 480px) {
+        .wetter-details {
+          grid-template-columns: 1fr 1fr;
+        }
+        .forecast-grid {
+          grid-template-columns: repeat(7, minmax(42px, 1fr));
+        }
+        .wetter-icon-big { font-size: 40px; }
+        .wetter-temp-big { font-size: 36px; }
       }
       .forecast-day {
         background: #c7c7c7;

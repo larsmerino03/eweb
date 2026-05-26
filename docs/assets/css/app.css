@@ -45,6 +45,12 @@ body {
   align-items: start;
 }
 
+@media (max-width: 600px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 .img-frame {
   background: #bdbdbd;
   padding: 10px;
