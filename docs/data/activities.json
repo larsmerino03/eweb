@@ -1,7 +1,24 @@
 {
-  "generated_at": "2026-05-19T17:50:01.109Z",
-  "count": 53,
+  "generated_at": "2026-05-26T17:40:36.797Z",
+  "count": 54,
   "activities": [
+    {
+      "id": 18585286013,
+      "name": "Fahrt am Nachmittag🥴",
+      "type": "Ride",
+      "sport_type": "Ride",
+      "distance": 62531.2,
+      "moving_time": 11963,
+      "elapsed_time": 14616,
+      "total_elevation_gain": 1211,
+      "start_date": "2026-05-20T13:56:07Z",
+      "start_date_local": "2026-05-20T15:56:07Z",
+      "average_speed": 5.227,
+      "max_speed": 17.16,
+      "average_heartrate": 138.2,
+      "max_heartrate": 180,
+      "kudos_count": 18
+    },
     {
       "id": 18454723764,
       "name": "Padel Turnier Buchsi🎾",
@@ -17,7 +34,7 @@
       "max_speed": 4.9,
       "average_heartrate": 103.7,
       "max_heartrate": 157,
-      "kudos_count": 13
+      "kudos_count": 14
     },
     {
       "id": 18242632263,
@@ -123,7 +140,7 @@
     },
     {
       "id": 17976046676,
-      "name": "Mittagsradfahrt",
+      "name": "100",
       "type": "Ride",
       "sport_type": "Ride",
       "distance": 103056,
