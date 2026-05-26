@@ -100,6 +100,10 @@ body {
   bottom: 160px;
   right: 70px;
 }
+.icon-wetter {
+  bottom: 160px;
+  left: 70px;
+}
 
 /* ===== Windows Layer =====
    Wichtig: Taskbar muss IMMER vorne sein.
@@ -166,6 +170,12 @@ body {
 #win-playlist {
   top: 170px;
   left: 280px;
+}
+#win-wetter {
+  top: 110px;
+  left: 180px;
+  width: min(460px, 88vw);
+  height: min(560px, 86vh);
 }
 
 /* Titelbar */
@@ -530,6 +540,12 @@ body {
     top: 336px;
     left: 50%;
     transform: translateX(-50%);
+    right: auto;
+    bottom: auto;
+  }
+  .icon-wetter {
+    top: 492px;
+    left: 5%;
     right: auto;
     bottom: auto;
   }

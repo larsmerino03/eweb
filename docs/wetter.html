@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wetter</title>
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <style>
+      body { padding: 0; overflow-y: auto; }
+
+      .wetter-state { padding: 24px 16px; text-align: center; font-weight: 700; font-size: 13px; }
+
+      .wetter-header-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 14px;
+        background: #bebebe;
+        border-bottom: 2px solid #7a7a7a;
+      }
+      .wetter-city {
+        font-size: 14px;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .wetter-refresh-btn {
+        background: #c0c0c0;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #5e5e5e;
+        border-bottom: 2px solid #5e5e5e;
+        padding: 3px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+      }
+      .wetter-refresh-btn:active {
+        border-top: 2px solid #5e5e5e;
+        border-left: 2px solid #5e5e5e;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+      }
+
+      .wetter-current {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        background: #d4d4d4;
+        border-bottom: 1px solid #aaa;
+      }
+      .wetter-icon-big { font-size: 56px; line-height: 1; }
+      .wetter-temp-big {
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 1;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      .wetter-temp-unit { font-size: 20px; font-weight: 700; color: #333; vertical-align: super; }
+      .wetter-desc {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #444;
+        margin-top: 4px;
+      }
+
+      .wetter-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 10px 14px;
+        border-bottom: 1px solid #aaa;
+      }
+      .detail-box {
+        background: #c7c7c7;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #7a7a7a;
+        border-bottom: 2px solid #7a7a7a;
+        padding: 8px 6px;
+        text-align: center;
+      }
+      .detail-label {
+        font-size: 9px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #555;
+        margin-bottom: 3px;
+      }
+      .detail-value {
+        font-size: 16px;
+        font-weight: 900;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      .detail-unit { font-size: 10px; color: #444; }
+
+      .forecast-title {
+        padding: 8px 14px 4px;
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #555;
+      }
+      .forecast-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        padding: 0 14px 14px;
+      }
+      .forecast-day {
+        background: #c7c7c7;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #7a7a7a;
+        border-bottom: 2px solid #7a7a7a;
+        padding: 6px 3px;
+        text-align: center;
+      }
+      .forecast-day-name {
+        font-size: 9px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .forecast-day-icon { font-size: 18px; margin: 3px 0; }
+      .forecast-max {
+        font-size: 12px;
+        font-weight: 900;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      .forecast-min {
+        font-size: 11px;
+        color: #555;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+
+      .error-box {
+        margin: 16px;
+        background: #c7c7c7;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #7a7a7a;
+        border-bottom: 2px solid #7a7a7a;
+        padding: 16px;
+      }
+      .error-icon { font-size: 28px; margin-bottom: 8px; }
+      .error-msg { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+      .retry-btn {
+        background: #c0c0c0;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #5e5e5e;
+        border-bottom: 2px solid #5e5e5e;
+        padding: 4px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Ladezustand -->
+    <div id="state-loading" class="wetter-state">Standort wird ermittelt…</div>
+
+    <!-- Fehler -->
+    <div id="state-error" style="display:none">
+      <div class="error-box">
+        <div class="error-icon">⚠</div>
+        <div class="error-msg" id="error-text"></div>
+        <button class="retry-btn" onclick="loadWeather()">↻ Nochmals versuchen</button>
+      </div>
+    </div>
+
+    <!-- Inhalt -->
+    <div id="state-content" style="display:none">
+      <div class="wetter-header-bar">
+        <div class="wetter-city" id="city-name">—</div>
+        <button class="wetter-refresh-btn" onclick="loadWeather()">↻ AKTUALISIEREN</button>
+      </div>
+
+      <div class="wetter-current">
+        <div class="wetter-icon-big" id="current-icon"></div>
+        <div>
+          <div>
+            <span class="wetter-temp-big" id="current-temp">—</span
+            ><span class="wetter-temp-unit">°C</span>
+          </div>
+          <div class="wetter-desc" id="current-desc">—</div>
+        </div>
+      </div>
+
+      <div class="wetter-details">
+        <div class="detail-box">
+          <div class="detail-label">Gefühlt</div>
+          <div class="detail-value">
+            <span id="detail-feels">—</span><span class="detail-unit"> °C</span>
+          </div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-label">Luftfeuchte</div>
+          <div class="detail-value">
+            <span id="detail-humidity">—</span><span class="detail-unit"> %</span>
+          </div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-label">Wind</div>
+          <div class="detail-value">
+            <span id="detail-wind">—</span><span class="detail-unit"> km/h</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="forecast-title">7-TAGE-PROGNOSE</div>
+      <div class="forecast-grid" id="forecast-grid"></div>
+    </div>
+
+    <script>
+      const WMO = {
+        0:  { icon: '☀', night: '🌙', text: 'Klarer Himmel' },
+        1:  { icon: '🌤', night: '🌙', text: 'Überwiegend klar' },
+        2:  { icon: '⛅', night: '⛅', text: 'Teils bewölkt' },
+        3:  { icon: '☁', night: '☁', text: 'Bewölkt' },
+        45: { icon: '🌫', night: '🌫', text: 'Nebel' },
+        48: { icon: '🌫', night: '🌫', text: 'Reifnebel' },
+        51: { icon: '🌦', night: '🌦', text: 'Leichter Nieselregen' },
+        53: { icon: '🌦', night: '🌦', text: 'Nieselregen' },
+        55: { icon: '🌧', night: '🌧', text: 'Starker Nieselregen' },
+        61: { icon: '🌧', night: '🌧', text: 'Leichter Regen' },
+        63: { icon: '🌧', night: '🌧', text: 'Regen' },
+        65: { icon: '🌧', night: '🌧', text: 'Starker Regen' },
+        71: { icon: '❄', night: '❄', text: 'Leichter Schneefall' },
+        73: { icon: '❄', night: '❄', text: 'Schneefall' },
+        75: { icon: '❄', night: '❄', text: 'Starker Schneefall' },
+        77: { icon: '🌨', night: '🌨', text: 'Schneekörner' },
+        80: { icon: '🌦', night: '🌦', text: 'Leichte Regenschauer' },
+        81: { icon: '🌦', night: '🌦', text: 'Regenschauer' },
+        82: { icon: '⛈', night: '⛈', text: 'Starke Regenschauer' },
+        85: { icon: '🌨', night: '🌨', text: 'Schneeschauer' },
+        86: { icon: '🌨', night: '🌨', text: 'Starke Schneeschauer' },
+        95: { icon: '⛈', night: '⛈', text: 'Gewitter' },
+        96: { icon: '⛈', night: '⛈', text: 'Gewitter mit Hagel' },
+        99: { icon: '⛈', night: '⛈', text: 'Gewitter mit starkem Hagel' },
+      };
+
+      function getWeatherInfo(code, isDay) {
+        const w = WMO[code] ?? { icon: '🌡', night: '🌡', text: 'Unbekannt' };
+        return { icon: isDay ? w.icon : w.night, text: w.text };
+      }
+
+      function degToCardinal(deg) {
+        const dirs = ['N', 'NO', 'O', 'SO', 'S', 'SW', 'W', 'NW'];
+        return dirs[Math.round(deg / 45) % 8];
+      }
+
+      function showState(state) {
+        ['loading', 'error', 'content'].forEach(s => {
+          document.getElementById('state-' + s).style.display = s === state ? '' : 'none';
+        });
+      }
+
+      function getLocation() {
+        return new Promise((resolve, reject) => {
+          if (!navigator.geolocation) {
+            reject(new Error('Geolocation wird von diesem Browser nicht unterstützt.'));
+            return;
+          }
+          navigator.geolocation.getCurrentPosition(
+            pos => resolve(pos.coords),
+            () => reject(new Error('Standort konnte nicht ermittelt werden. Bitte Standortzugriff erlauben.'))
+          );
+        });
+      }
+
+      async function loadWeather() {
+        showState('loading');
+        try {
+          const coords = await getLocation();
+          const lat = coords.latitude.toFixed(4);
+          const lon = coords.longitude.toFixed(4);
+
+          const [weatherRes, geoRes] = await Promise.all([
+            fetch(
+              `https://api.open-meteo.com/v1/forecast` +
+              `?latitude=${lat}&longitude=${lon}` +
+              `&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m,relative_humidity_2m,is_day` +
+              `&daily=weathercode,temperature_2m_max,temperature_2m_min` +
+              `&wind_speed_unit=kmh&timezone=auto&forecast_days=7`
+            ),
+            fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=de`,
+              { headers: { 'User-Agent': 'PortfolioWeatherApp/1.0' } }
+            )
+          ]);
+
+          if (!weatherRes.ok) throw new Error('Wetterdaten konnten nicht geladen werden.');
+
+          const weather = await weatherRes.json();
+          const geo = geoRes.ok ? await geoRes.json() : null;
+
+          // Stadtname
+          const city =
+            geo?.address?.city ||
+            geo?.address?.town ||
+            geo?.address?.village ||
+            geo?.address?.county ||
+            'Unbekannter Ort';
+          document.getElementById('city-name').textContent = city.toUpperCase();
+
+          // Aktuelles Wetter
+          const cur = weather.current;
+          const info = getWeatherInfo(cur.weathercode, cur.is_day);
+          document.getElementById('current-icon').textContent = info.icon;
+          document.getElementById('current-temp').textContent = Math.round(cur.temperature_2m);
+          document.getElementById('current-desc').textContent = info.text;
+          document.getElementById('detail-feels').textContent = Math.round(cur.apparent_temperature);
+          document.getElementById('detail-humidity').textContent = cur.relative_humidity_2m;
+          document.getElementById('detail-wind').textContent =
+            `${Math.round(cur.windspeed_10m)} ${degToCardinal(cur.winddirection_10m)}`;
+
+          // 7-Tage-Prognose
+          const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+          const grid = document.getElementById('forecast-grid');
+          grid.innerHTML = weather.daily.time.map((date, i) => {
+            const dayInfo = getWeatherInfo(weather.daily.weathercode[i], true);
+            const name = i === 0 ? 'Heute' : dayNames[new Date(date).getDay()];
+            const max = Math.round(weather.daily.temperature_2m_max[i]);
+            const min = Math.round(weather.daily.temperature_2m_min[i]);
+            return `<div class="forecast-day">
+              <div class="forecast-day-name">${name}</div>
+              <div class="forecast-day-icon">${dayInfo.icon}</div>
+              <div class="forecast-max">${max}°</div>
+              <div class="forecast-min">${min}°</div>
+            </div>`;
+          }).join('');
+
+          showState('content');
+        } catch (err) {
+          document.getElementById('error-text').textContent = err.message;
+          showState('error');
+        }
+      }
+
+      loadWeather();
+    </script>
+  </body>
+</html>

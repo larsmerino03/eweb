@@ -57,6 +57,15 @@
         <span class="icon-label">PLAYLIST</span>
       </button>
 
+      <button
+        class="desktop-icon icon-wetter"
+        type="button"
+        data-open="win-wetter"
+      >
+        <img class="icon-img" src="assets/images/wetter.svg" alt="" />
+        <span class="icon-label">WETTER</span>
+      </button>
+
       <!-- WINDOWS LAYER -->
       <div class="windows" aria-label="Fenster Ebene">
         <!-- ÜBER MICH -->
@@ -306,6 +315,31 @@
               src="ausruestung/gravel.html"
               title="Ausrüstung"
             ></iframe>
+          </div>
+        </section>
+
+        <!-- WETTER -->
+        <section class="window" id="win-wetter" aria-hidden="true">
+          <header class="win-topbar">
+            <div class="win-title-left">
+              <span class="win-app-icon" aria-hidden="true"></span>
+              <h2 class="win-title">WETTER</h2>
+            </div>
+            <div class="win-controls">
+              <button class="win-minimize" type="button" data-minimize aria-label="Fenster minimieren" title="Minimieren">–</button>
+              <button class="win-max" type="button" data-maximize aria-label="Fenster maximieren" title="Maximieren">▢</button>
+              <button class="win-close" type="button" data-close aria-label="Fenster schliessen" title="Schliessen">✕</button>
+            </div>
+          </header>
+          <nav class="win-menubar" aria-label="Menü">
+            <button type="button" class="win-menuitem">DATEI</button>
+            <button type="button" class="win-menuitem">BEARBEITEN</button>
+            <button type="button" class="win-menuitem">ANSICHT</button>
+            <button type="button" class="win-menuitem">ZU</button>
+            <button type="button" class="win-menuitem">HILFE</button>
+          </nav>
+          <div class="win-body">
+            <iframe class="win-iframe" src="wetter.html" title="Wetter" allow="geolocation"></iframe>
           </div>
         </section>
 
