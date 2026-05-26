@@ -1,0 +1,55 @@
+name: Strava Aktivitäten aktualisieren
+
+on:
+  schedule:
+    - cron: '0 21 * * *'  # täglich 22:00 CET / 23:00 CEST
+  workflow_dispatch:       # manuell auslösbar über GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  update-strava:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Dependencies installieren
+        run: npm ci
+
+      - name: Strava Aktivitäten abrufen
+        id: fetch
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: node scripts/fetch-activities.js
+
+      - name: Neuen Refresh Token speichern
+        if: steps.fetch.outputs.new_refresh_token != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          echo "${{ steps.fetch.outputs.new_refresh_token }}" | \
+            gh secret set STRAVA_REFRESH_TOKEN --repo ${{ github.repository }}
+          echo "✅ Refresh Token aktualisiert."
+
+      - name: Änderungen commiten und pushen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/activities.json
+          if git diff --staged --quiet; then
+            echo "ℹ Keine neuen Aktivitäten – kein Commit nötig."
+          else
+            COUNT=$(node -e "const d=require('./docs/data/activities.json');console.log(d.count)")
+            git commit -m "Auto-Update: Strava Aktivitäten $(date +'%Y-%m-%d') (${COUNT} total)"
+            git push
+          fi

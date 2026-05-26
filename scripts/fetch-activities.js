@@ -42,7 +42,7 @@ async function getAccessToken() {
     console.error("❌ Token-Fehler:", JSON.stringify(data, null, 2));
     process.exit(1);
   }
-  return data.access_token;
+  return { access_token: data.access_token, refresh_token: data.refresh_token };
 }
 
 async function fetchAllActivities(token) {
@@ -98,10 +98,17 @@ async function fetchAllActivities(token) {
 
 async function main() {
   console.log("🔑 Access Token holen…");
-  const token = await getAccessToken();
+  const { access_token, refresh_token: newRefreshToken } = await getAccessToken();
+
+  // Neuen Refresh Token an GitHub Actions übergeben (Strava rotiert ihn bei jedem Call)
+  if (process.env.GITHUB_OUTPUT && newRefreshToken) {
+    const { appendFileSync } = await import("fs");
+    appendFileSync(process.env.GITHUB_OUTPUT, `new_refresh_token=${newRefreshToken}\n`);
+    console.log("🔑 Neuer Refresh Token an GitHub Actions übergeben.");
+  }
 
   console.log("📡 Aktivitäten von Strava laden…");
-  const activities = await fetchAllActivities(token);
+  const activities = await fetchAllActivities(access_token);
 
   const outDir = path.join(__dirname, "../docs/data");
   mkdirSync(outDir, { recursive: true });
