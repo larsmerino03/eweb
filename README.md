@@ -41,7 +41,9 @@ Die Website simuliert einen klassischen Desktop mit Fenstern, die sich öffnen, 
 | Node.js + Express | Lokales Script zum Datenabruf von Strava |
 | Strava API v3 | Aktivitäten, Routen, Fotos |
 | Leaflet.js | Interaktive Karten mit Google Encoded Polyline |
-| OpenStreetMap | Kartenmaterial (kostenlos, keine API-Key nötig) |
+| OpenStreetMap / Nominatim | Kartenmaterial & Reverse Geocoding (Stadtname) |
+| Open-Meteo API | Wetterdaten (kein API-Key nötig) |
+| GitHub Actions | Nightly Auto-Update der Strava-Aktivitäten (22:00 Uhr) |
 | GitHub Pages | Hosting (statisch aus `/docs`) |
 | dotenv | Lokale Umgebungsvariablen (.env) |
 
@@ -70,12 +72,16 @@ Alle Features sind sofort verfügbar:
 
 ```
 eweb/
+├── .github/
+│   └── workflows/
+│       └── update-strava.yml    # GitHub Actions: tägliches Auto-Update (22:00 Uhr)
 ├── docs/                        # Öffentliche Website (GitHub Pages)
 │   ├── index.html               # Desktop-Startseite
 │   ├── meine_workouts.html      # Strava Workouts
 │   ├── highlights.html          # Highlight-Touren mit Karte
 │   ├── ueber_mich.html          # Über mich
 │   ├── musik.html               # Playlist
+│   ├── wetter.html              # Wetter-App (Open-Meteo API + GPS)
 │   ├── ausruestung/
 │   │   ├── gravel.html          # ARC8 Eero Specs
 │   │   └── padel.html           # NOX AT10 Genius Specs
@@ -87,7 +93,7 @@ eweb/
 │   │   │   └── script.js        # Desktop-Logik (Fenster, Drag, Taskbar)
 │   │   └── images/
 │   └── data/
-│       └── activities.json      # Strava-Aktivitäten (statisch gespeichert)
+│       └── activities.json      # Strava-Aktivitäten (täglich automatisch aktualisiert)
 ├── scripts/
 │   └── fetch-activities.js      # Script: Strava-Daten abrufen und speichern
 ├── server.js                    # Lokaler OAuth-Server (nur für Setup)
@@ -168,13 +174,12 @@ Die JSON-Datei wird dann auf GitHub committed → der Besucher sieht die Daten, 
 
 ### Aktivitäten aktualisieren
 
-Nach neuen Aktivitäten auf Strava:
+Die Aktivitäten werden **automatisch täglich um 22:00 Uhr** via GitHub Actions aktualisiert. Der Workflow holt neue Daten von Strava, committet `activities.json` und rotiert den Refresh Token automatisch.
+
+Manuell abrufen (optional):
 
 ```bash
 npm run fetch
-git add docs/data/activities.json
-git commit -m "Aktivitäten aktualisiert"
-git push
 ```
 
 ---
