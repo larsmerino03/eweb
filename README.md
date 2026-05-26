@@ -57,12 +57,12 @@ Die Website ist vollständig statisch und läuft direkt im Browser:
 
 Alle Features sind sofort verfügbar:
 
-- Desktop mit Fenstern öffnen → **Doppelklick auf ein Icon**
+- Desktop mit Fenstern öffnen → **Klick auf ein Icon**
 - Workouts mit Filter → Fenster **WORKOUTS** öffnen
 - Interaktive Streckenkarte → Fenster **HIGHLIGHTS** öffnen
 - Ausrüstung und Specs → Fenster **AUSRÜSTUNG** öffnen
 
-> Die Strava-Aktivitäten sind als statische Datei im Repository gespeichert und werden ohne Login geladen. Die interaktiven Karten laufen über OpenStreetMap und benötigen eine Internetverbindung.
+> Die Strava-Aktivitäten sind als statische Datei im Repository gespeichert und werden ohne Login geladen. Die interaktiven Karten laufen über OpenStreetMap und benötigen eine Internetverbindung. Täglich um 22:00 Uhr wird geschaut, ob weitere Workouts hochgeladen wurden und werden aktualisiert
 
 ---
 
