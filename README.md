@@ -17,6 +17,7 @@ Die Website simuliert einen klassischen Desktop mit Fenstern, die sich öffnen, 
 | **Highlights** | Zwei ausgewählte Touren mit interaktiver Karte, Stats und Fotos |
 | **Ausrüstung** | Mein Gravelbike (ARC8 Eero) und Padel-Schläger (NOX AT10 Genius) |
 | **Playlist** | Meine aktuelle Musik-Playlist |
+| **Wetter** | Aktuelles Wetter mit GPS-Erkennung |
 
 ---
 
