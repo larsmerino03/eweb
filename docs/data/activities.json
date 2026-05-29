@@ -1,7 +1,41 @@
 {
-  "generated_at": "2026-05-28T22:41:47.867Z",
-  "count": 54,
+  "generated_at": "2026-05-29T22:38:12.236Z",
+  "count": 56,
   "activities": [
+    {
+      "id": 18703241081,
+      "name": "Afternoon Golf",
+      "type": "Golf",
+      "sport_type": "Golf",
+      "distance": 0,
+      "moving_time": 2459,
+      "elapsed_time": 2459,
+      "total_elevation_gain": 0,
+      "start_date": "2026-05-29T13:45:00Z",
+      "start_date_local": "2026-05-29T15:45:00Z",
+      "average_speed": 0,
+      "max_speed": 0,
+      "average_heartrate": 105.2,
+      "max_heartrate": 125,
+      "kudos_count": 4
+    },
+    {
+      "id": 18700440301,
+      "name": "Coffee-Ride☀️☕️",
+      "type": "Ride",
+      "sport_type": "Ride",
+      "distance": 42973,
+      "moving_time": 6581,
+      "elapsed_time": 11309,
+      "total_elevation_gain": 579,
+      "start_date": "2026-05-29T07:29:41Z",
+      "start_date_local": "2026-05-29T09:29:41Z",
+      "average_speed": 6.53,
+      "max_speed": 19.24,
+      "average_heartrate": 141.7,
+      "max_heartrate": 183,
+      "kudos_count": 13
+    },
     {
       "id": 18585286013,
       "name": "Fahrt am Nachmittag🥴",
