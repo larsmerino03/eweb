@@ -1,7 +1,24 @@
 {
-  "generated_at": "2026-06-13T22:05:35.786Z",
-  "count": 57,
+  "generated_at": "2026-06-14T22:12:42.751Z",
+  "count": 58,
   "activities": [
+    {
+      "id": 18919077456,
+      "name": "Eier schwänke..",
+      "type": "Ride",
+      "sport_type": "Ride",
+      "distance": 65869,
+      "moving_time": 8476,
+      "elapsed_time": 12239,
+      "total_elevation_gain": 307,
+      "start_date": "2026-06-14T12:05:43Z",
+      "start_date_local": "2026-06-14T14:05:43Z",
+      "average_speed": 7.771,
+      "max_speed": 14.78,
+      "average_heartrate": 151,
+      "max_heartrate": 182,
+      "kudos_count": 9
+    },
     {
       "id": 18782240538,
       "name": "Padel in der Mittagspause",
