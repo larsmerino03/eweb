@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-20T22:09:46.002Z",
+  "generated_at": "2026-06-21T22:16:05.418Z",
   "count": 60,
   "activities": [
     {
@@ -17,7 +17,7 @@
       "max_speed": 18.26,
       "average_heartrate": 142.3,
       "max_heartrate": 178,
-      "kudos_count": 6
+      "kudos_count": 12
     },
     {
       "id": 18962306360,
@@ -34,7 +34,7 @@
       "max_speed": 20.34,
       "average_heartrate": 142,
       "max_heartrate": 181,
-      "kudos_count": 12
+      "kudos_count": 13
     },
     {
       "id": 18919077456,
@@ -51,7 +51,7 @@
       "max_speed": 14.78,
       "average_heartrate": 151,
       "max_heartrate": 182,
-      "kudos_count": 13
+      "kudos_count": 14
     },
     {
       "id": 18782240538,
@@ -68,7 +68,7 @@
       "max_speed": 0,
       "average_heartrate": 114.8,
       "max_heartrate": 147,
-      "kudos_count": 11
+      "kudos_count": 12
     },
     {
       "id": 18703241081,
