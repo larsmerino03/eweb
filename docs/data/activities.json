@@ -1,7 +1,22 @@
 {
-  "generated_at": "2026-06-23T22:15:27.130Z",
-  "count": 60,
+  "generated_at": "2026-06-24T22:19:03.288Z",
+  "count": 61,
   "activities": [
+    {
+      "id": 19050542907,
+      "name": "Seeründeli",
+      "type": "Ride",
+      "sport_type": "Ride",
+      "distance": 50052.5,
+      "moving_time": 6353,
+      "elapsed_time": 11243,
+      "total_elevation_gain": 224,
+      "start_date": "2026-06-24T11:43:30Z",
+      "start_date_local": "2026-06-24T13:43:30Z",
+      "average_speed": 7.879,
+      "max_speed": 16,
+      "kudos_count": 7
+    },
     {
       "id": 18999401664,
       "name": "Turnfest, Bade, Nidlechueche",
